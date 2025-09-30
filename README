@@ -1,0 +1,12 @@
+## SampleApp
+reactのAPIサーバーとしてのサンプルアプリです。
+
+## 環境構築
+source venv/bin/activate
+pip install -r requirements.txt
+
+## ローカル環境の軌道
+source venv/bin/activate
+uvicorn main:app --reload
+
+
