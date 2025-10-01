@@ -11,6 +11,7 @@ class Environment(BaseSettings):
 
     class Config:
         env_file = os.path.join(PROJECT_ROOT, '.env')
+        extra = 'ignore'
 
 @lru_cache
 def get_env():
