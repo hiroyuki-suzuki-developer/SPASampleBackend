@@ -1,7 +1,8 @@
 from models.users import User
 from sqlalchemy.orm import Session
 from sqlalchemy import select
-
+from schemas.request.auth.register import Register
+import bcrypt
 
 def index_user(db: Session):
     stmt = select(User).order_by(User.id)
@@ -21,10 +22,16 @@ def get_user_by_email(db: Session, email: str):
     user = result.scalar_one_or_none()
     return user
 
-def create_user(db: Session, user: User):
-    db.add(user)
+def create_user(db: Session, user: Register):
+    user_data_dict = user.model_dump()
+    password_bytes = user_data_dict.get('password', '').encode('utf-8')
+    salt = bcrypt.gensalt(rounds=12)
+    hashed_bytes = bcrypt.hashpw(password_bytes, salt)
+    user_data_dict['password'] = hashed_bytes.decode('utf-8')
+    db_user = User(**user_data_dict)
+    db.add(db_user)
     db.commit()
-    db.refresh(user)
+    db.refresh(db_user)
     return user
 
 

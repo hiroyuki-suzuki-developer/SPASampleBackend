@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from router import users
+from router import auth
 from dotenv import load_dotenv
 
 # env追加
@@ -19,3 +20,4 @@ app.add_middleware(
 )
 
 app.include_router(users.router)
+app.include_router(auth.router)

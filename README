@@ -6,6 +6,9 @@ python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 
+## DBへ接続
+psql -h localhost -U user -d table_name
+
 ## ローカル環境の軌道
 source venv/bin/activate
 uvicorn main:app --reload
